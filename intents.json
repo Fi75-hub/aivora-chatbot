@@ -1,0 +1,2311 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "patterns": [
+                "\\b(hi|hello|hey|good\\s*(morning|afternoon|evening))\\b",
+                "\\b(how\\s+are\\s+you|is\\s+anyone\\s+there|can\\s+you\\s+help)\\b"
+            ],
+            "responses": [
+                "Hello, I am Aivora. How can I help you today?",
+                "Welcome to Aivora support. Please tell me what you need help with today.",
+                "Hello, I can help with orders, returns, delivery, payments, accounts, products, offers, membership, and seller issues."
+            ],
+            "summary": ""
+        },
+        {
+            "tag": "support_menu",
+            "patterns": [
+                "^\\s*(help|menu|options|topics|support\\s+menu|what\\s+can\\s+you\\s+do)\\s*$",
+                "\\b(show\\s+me\\s+help|show\\s+options)\\b"
+            ],
+            "responses": [
+                "Support options: track order, start return, change delivery, fix payment, account help, find item, seller help."
+            ],
+            "summary": ""
+        },
+        {
+            "tag": "clarify_issue",
+            "patterns": [
+                "\\b(problem|issue|trouble|not\\s+working|something\\s+wrong|need\\s+help)\\b",
+                "\\b(i\\s+have\\s+a\\s+problem|there\\s+is\\s+an\\s+issue)\\b"
+            ],
+            "responses": [
+                "What is the issue about: order, return, delivery, payment, account, product, seller, or membership?"
+            ],
+            "summary": ""
+        },
+        {
+            "tag": "priority_issue",
+            "patterns": [
+                "\\b(urgent|emergency|asap|immediately|right\\s+now)\\b",
+                "\\b(very\\s+angry|really\\s+angry|charged\\s+twice|lost\\s+package|missing\\s+package|stolen)\\b"
+            ],
+            "responses": [
+                "I can mark this as priority, but I need one detail to choose the right support path."
+            ],
+            "next_step": "Next step: type a short issue such as payment charged twice, package missing, account locked, or return problem.",
+            "summary": ""
+        },
+        {
+            "tag": "support_agent",
+            "patterns": [
+                "\\b(technical\\s+support|customer\\s+support|customer\\s+service|help\\s+desk|live\\s+agent|representative|human\\s+agent)\\b",
+                "\\b(speak\\s+to\\s+someone|talk\\s+to\\s+agent|connect\\s+me|escalate)\\b"
+            ],
+            "responses": [
+                "I can guide you first. If the issue still needs a person, use the support page for the relevant order or account.",
+                "For live support, open the relevant order or account page and choose the support option so the team has the correct details.",
+                "I can help narrow the issue. Is it about an order, return, delivery, payment, account, product, seller, or membership?"
+            ],
+            "summary": "support escalation"
+        },
+        {
+            "tag": "delivery_late",
+            "patterns": [
+                "\\b(late|delayed|delay|not\\s+on\\s+time)\\b"
+            ],
+            "responses": [
+                "Your delivery appears delayed. Check the latest tracking update first."
+            ],
+            "next_step": "Next step: wait until the promised date has passed, then contact support if needed.",
+            "summary": "late delivery"
+        },
+        {
+            "tag": "delivery_missing",
+            "patterns": [
+                "\\b(missing|lost|not\\s+arrived|cannot\\s+find)\\b"
+            ],
+            "responses": [
+                "For a missing package, check the delivery proof, address, and nearby safe places before reporting it from the order page."
+            ],
+            "next_step": "Next step: check safe places and delivery proof before reporting it.",
+            "summary": "missing package"
+        },
+        {
+            "tag": "delivery_damaged",
+            "patterns": [
+                "\\b(damaged|broken|defective|cracked)\\b"
+            ],
+            "responses": [
+                "If the item arrived damaged, start a return or replacement request and select damaged item as the reason."
+            ],
+            "next_step": "Next step: choose damaged item as the return reason.",
+            "summary": "damaged delivery"
+        },
+        {
+            "tag": "delivery_wrong_address",
+            "patterns": [
+                "\\b(change\\s+delivery\\s+address|change\\s+address|wrong\\s+delivery\\s+address)\\b",
+                "\\b(wrong\\s+address|address|incorrect\\s+address)\\b"
+            ],
+            "responses": [
+                "If the order has not shipped, update the address from your orders page. If it has shipped, contact support."
+            ],
+            "next_step": "Next step: update the address if the order has not shipped.",
+            "summary": "delivery address help"
+        },
+        {
+            "tag": "returns",
+            "patterns": [
+                "\\b(return|returns|refund|refunds|replace|replacement|exchange|exchanges)\\b",
+                "\\b(send\\s+it\\s+back|money\\s+back|wrong\\s+item|damaged\\s+item|return\\s+label)\\b",
+                "\\b(how\\s+do\\s+i|can\\s+i|i\\s+want\\s+to)\\b.*\\b(return|refund|replace|exchange)\\b",
+                "\\b(product|item|items|package|order)\\b.*\\b(damaged|broken|faulty|wrong|defective)\\b"
+            ],
+            "responses": [
+                "I can help start a return. If you have the order number, type it now; otherwise open your orders page and choose the item to return.",
+                "For returns, choose the order and item first, then select the reason such as damaged, wrong item, or no longer needed.",
+                "Return help starts from the orders page. Type an order number if you want this chat to focus on a specific order."
+            ],
+            "summary": "return or refund"
+        },
+        {
+            "tag": "delivery",
+            "patterns": [
+                "\\b(change\\s+delivery|delivery\\s+change|delivery\\s+changes)\\b",
+                "\\b(delivery|deliveries|shipping|shipment|ship|arrive|arrival|courier)\\b",
+                "\\b(delivery\\s+date|delivery\\s+time)\\b",
+                "\\b(same\\s+day|next\\s+day|standard\\s+shipping|fast\\s+delivery)\\b"
+            ],
+            "responses": [
+                "I can help with delivery changes or problems. Tell me if it is late, missing, damaged, wrong address, or type the order number."
+            ],
+            "summary": "delivery help"
+        },
+        {
+            "tag": "order_status",
+            "patterns": [
+                "\\b(track\\s+order|order\\s+tracking|tracking\\s+order|check\\s+order|order\\s+status)\\b",
+                "\\b(where\\s+is|track|tracking|status|check)\\b.*\\b(order|package|parcel|delivery)\\b",
+                "\\b(order|package|parcel)\\b.*\\b(status|tracking|where)\\b"
+            ],
+            "responses": [
+                "I can help track an order. Please type the order number, for example: 123456.",
+                "Please share the order number so I can keep this tracking request focused.",
+                "For order tracking, type the order number and I will guide the next step."
+            ],
+            "summary": "order tracking"
+        },
+        {
+            "tag": "order_number",
+            "patterns": [
+                "\\border\\s*(number|id)?\\s*#?\\s*(\\d{4,})\\b",
+                "\\bmy\\s+order\\s+is\\s*(\\d{4,})\\b"
+            ],
+            "responses": [
+                "Order {order_number} is selected for this conversation. You can ask to track it, return it, cancel it, or check delivery help."
+            ],
+            "summary": ""
+        },
+        {
+            "tag": "order_number_tracking",
+            "patterns": [
+                "\\border\\s*(number|id)?\\s*#?\\s*(\\d{4,})\\b",
+                "^#?\\d{4,}$"
+            ],
+            "responses": [
+                "Order {order_number} is selected for tracking. Check the tracking page for carrier status, delivery date, and proof of delivery.",
+                "I have order {order_number} for tracking. Open your orders page and choose Track Package for the latest delivery update."
+            ],
+            "summary": "order tracking"
+        },
+        {
+            "tag": "order_number_return",
+            "patterns": [
+                "\\border\\s*(number|id)?\\s*#?\\s*(\\d{4,})\\b",
+                "^#?\\d{4,}$"
+            ],
+            "responses": [
+                "Order {order_number} is selected for return help. Open the order, choose the item, and start a return or replacement request.",
+                "For order {order_number}, start from your orders page, select the item, and choose the return reason that matches the problem."
+            ],
+            "summary": "return or refund"
+        },
+        {
+            "tag": "order_number_delivery",
+            "patterns": [
+                "\\border\\s*(number|id)?\\s*#?\\s*(\\d{4,})\\b",
+                "^#?\\d{4,}$"
+            ],
+            "responses": [
+                "Order {order_number} is selected for delivery help. If it has not shipped, update the address or delivery option from the order page.",
+                "For order {order_number}, check the delivery status first. If it has shipped, use order support for address or delivery-date changes."
+            ],
+            "summary": "delivery help"
+        },
+        {
+            "tag": "order_number_payment",
+            "patterns": [
+                "\\border\\s*(number|id)?\\s*#?\\s*(\\d{4,})\\b",
+                "^#?\\d{4,}$"
+            ],
+            "responses": [
+                "Order {order_number} is selected for payment help. Compare the order total with the completed payment and keep the transaction ID ready.",
+                "For payment support on order {order_number}, check whether the charge is pending or completed before raising a billing request."
+            ],
+            "summary": "payment or billing"
+        },
+        {
+            "tag": "followup_track_order",
+            "patterns": [
+                "\\b(track|where\\s+is|status|find)\\b.*\\b(it|this|that)\\b"
+            ],
+            "responses": [
+                "Order {order_number} is ready to track from your orders page.",
+                "For order {order_number}, open the tracking page to see the latest update."
+            ],
+            "next_step": "Next step: contact support if the delivery date has passed without a new update.",
+            "summary": "order tracking"
+        },
+        {
+            "tag": "followup_return_order",
+            "patterns": [
+                "\\b(return|refund|replace|exchange)\\b.*\\b(it|this|that)\\b"
+            ],
+            "responses": [
+                "For order {order_number}, open your orders page, choose the item, and start a return or replacement request.",
+                "You can start a return for order {order_number} from your orders page if the item is eligible."
+            ],
+            "next_step": "Next step: choose the item and return reason on your orders page.",
+            "summary": "return or refund"
+        },
+        {
+            "tag": "followup_cancel_order",
+            "patterns": [
+                "\\b(cancel|stop)\\b.*\\b(it|this|that)\\b"
+            ],
+            "responses": [
+                "For order {order_number}, use the cancel option on your orders page if it has not shipped yet.",
+                "You may be able to cancel order {order_number} before dispatch. If it has shipped, you may need to return it."
+            ],
+            "next_step": "Next step: use the cancel option before the order ships, if available.",
+            "summary": "order cancellation"
+        },
+        {
+            "tag": "cancel_order",
+            "patterns": [
+                "\\b(cancel|cancellation|stop)\\b.*\\b(order|purchase|delivery|item)\\b",
+                "\\b(can\\s+i\\s+cancel|changed\\s+my\\s+mind|do\\s+not\\s+want\\s+it)\\b"
+            ],
+            "responses": [
+                "You can cancel an order before it ships from your orders page if the cancel option is available.",
+                "If the cancel option is missing, the order is probably already being prepared or shipped.",
+                "For cancellation, check your orders page as soon as possible because the option is time-sensitive."
+            ],
+            "summary": "order cancellation"
+        },
+        {
+            "tag": "payment_duplicate",
+            "patterns": [
+                "\\b(payment|paid|pay|charged|charge|card|billing|transaction)\\b.*\\b(twice|two\\s+times|double|duplicate|again)\\b",
+                "\\b(twice|two\\s+times|double|duplicate)\\b.*\\b(payment|paid|pay|charged|charge|card|billing|transaction)\\b",
+                "\\b(charged\\s+twice|double\\s+charged|duplicate\\s+charge|paid\\s+twice|payment\\s+(done|made|taken)\\s+twice)\\b"
+            ],
+            "responses": [
+                "That looks like a duplicate payment. Do not retry checkout. First check whether one transaction is pending. If both payments are completed, keep the order number and transaction IDs and raise a payment refund request from the order or billing page.",
+                "For a payment made twice, check your bank statement first. If one charge is pending, wait for it to clear. If two completed charges remain, report the duplicate payment with your order number and transaction details."
+            ],
+            "next_step": "Next step: save a screenshot of both completed charges before reporting it.",
+            "summary": "duplicate payment"
+        },
+        {
+            "tag": "payment",
+            "patterns": [
+                "\\b(payment|payments|paid|pay|card|checkout|charge|charged|billing|bill|transaction)\\b",
+                "\\b(card\\s+declined|payment\\s+failed|wrong\\s+charge|checkout\\s+error)\\b"
+            ],
+            "responses": [
+                "Please tell me which payment issue happened: failed checkout, declined card, wrong charge, duplicate charge, or type the order number.",
+                "I can help with payment problems. Was it failed, declined, charged incorrectly, charged twice, or linked to a specific order?",
+                "For payment help, share whether it is checkout failure, card decline, duplicate charge, wrong charge, or an order number."
+            ],
+            "summary": "payment or billing"
+        },
+        {
+            "tag": "account_password",
+            "patterns": [
+                "\\b(password|forgot\\s+password|reset\\s+password|change\\s+password)\\b",
+                "\\b(cannot\\s+log\\s+in|locked\\s+out)\\b"
+            ],
+            "responses": [
+                "For password help, use the password reset option on the sign-in page, confirm the email address, and follow the verification link.",
+                "If you cannot sign in, reset the password first. If the account is locked, complete the verification steps shown on the sign-in page."
+            ],
+            "next_step": "Next step: check your email for the reset or verification message.",
+            "summary": "account password help"
+        },
+        {
+            "tag": "account",
+            "patterns": [
+                "\\b(account|login|password|email|profile|sign\\s*in|signin)\\b",
+                "\\b(forgot\\s+password|cannot\\s+log\\s+in|locked\\s+out|change\\s+email)\\b"
+            ],
+            "responses": [
+                "I can help with account access. Tell me if the issue is login, password, email, profile, or a locked account.",
+                "For account help, share whether you need password reset, login support, email change, or account recovery.",
+                "Account support covers login, password, email, profile, and locked-account problems."
+            ],
+            "summary": "account help"
+        },
+        {
+            "tag": "product_search",
+            "patterns": [
+                "\\b(product|products|phone|laptop|book|charger|gift)\\b",
+                "\\b(find|search|looking\\s+for|need|want|recommend)\\b.*\\b(product|item|gift|phone|laptop|charger)\\b"
+            ],
+            "responses": [
+                "What matters most for the item: price, rating, delivery speed, or brand?"
+            ],
+            "summary": "product search"
+        },
+        {
+            "tag": "recommend_price",
+            "patterns": [
+                "\\b(price|cheap|budget|affordable|low\\s+cost|cost)\\b"
+            ],
+            "responses": [
+                "For price-focused shopping, sort by price, compare ratings, and check delivery fees before choosing."
+            ],
+            "next_step": "Next step: shortlist two or three items before deciding.",
+            "summary": "price recommendation"
+        },
+        {
+            "tag": "recommend_rating",
+            "patterns": [
+                "\\b(rating|ratings|review|reviews|best\\s+rated)\\b"
+            ],
+            "responses": [
+                "For review-focused shopping, compare recent verified reviews, rating count, and product photos."
+            ],
+            "next_step": "Next step: read recent verified reviews.",
+            "summary": "review recommendation"
+        },
+        {
+            "tag": "recommend_delivery",
+            "patterns": [
+                "\\b(fast\\s+delivery|delivery\\s+speed|quick|same\\s+day|next\\s+day)\\b"
+            ],
+            "responses": [
+                "For fast delivery, filter by delivery date and check whether the item is ready to ship from your area.",
+                "Choose items with clear delivery dates and avoid listings with uncertain dispatch times."
+            ],
+            "next_step": "Next step: filter by delivery date before choosing.",
+            "summary": "delivery-speed recommendation"
+        },
+        {
+            "tag": "recommend_brand",
+            "patterns": [
+                "\\b(brand|branded|seller\\s+rating|trusted)\\b"
+            ],
+            "responses": [
+                "For brand-focused shopping, compare official stores, seller ratings, warranty details, and return policy.",
+                "Choose trusted sellers with clear warranty, return, and support information."
+            ],
+            "next_step": "Next step: compare seller rating, warranty, and return policy.",
+            "summary": "brand recommendation"
+        },
+        {
+            "tag": "offers",
+            "patterns": [
+                "\\b(deal|deals|discount|discounts|coupon|coupons|offer|offers|sale|promo|promotion)\\b"
+            ],
+            "responses": [
+                "For offers, check the deals page, coupons, and limited-time discounts before checkout.",
+                "Some discounts apply automatically, while coupon discounts must be selected before checkout.",
+                "If a promo code is not working, check the expiry date, eligible items, and minimum order value."
+            ],
+            "summary": "offers or discounts"
+        },
+        {
+            "tag": "membership",
+            "patterns": [
+                "\\b(membership|subscription|free\\s+delivery|trial|premium)\\b"
+            ],
+            "responses": [
+                "Membership benefits can include faster delivery, special offers, or other services depending on the store.",
+                "You can usually manage membership from your account settings or subscriptions page.",
+                "If a membership benefit is missing, check whether the membership is active and whether the item is eligible."
+            ],
+            "summary": "membership help"
+        },
+        {
+            "tag": "seller_not_responding",
+            "patterns": [
+                "\\b(seller\\s+not\\s+responding|not\\s+responding|no\\s+reply|no\\s+response)\\b",
+                "\\b(contacted\\s+seller|seller\\s+ignored|seller\\s+silent)\\b"
+            ],
+            "responses": [
+                "If the seller is not responding, open the order page and use the order support option so the platform can review the case.",
+                "For a missing seller reply, keep the order details ready and raise the issue from the order support page."
+            ],
+            "summary": "seller not responding"
+        },
+        {
+            "tag": "seller_issue",
+            "patterns": [
+                "\\b(seller|third\\s*party|marketplace|vendor)\\b",
+                "\\b(contact\\s+seller|seller\\s+not\\s+responding|fake\\s+seller)\\b"
+            ],
+            "responses": [
+                "I can help with seller issues. Tell me if the seller is not responding, the listing looks fake, or there is an order dispute.",
+                "For seller help, open the order page first. If the seller is not responding, use the order support option so the case can be reviewed.",
+                "Seller support can help with marketplace disputes, missing replies, listing concerns, and seller-related order problems."
+            ],
+            "summary": "seller issue"
+        },
+        {
+            "tag": "name",
+            "patterns": [
+                "\\b(my\\s+name\\s+is|i'm|call\\s+me)\\s+([A-Za-z]{2,})\\b"
+            ],
+            "responses": [
+                "Hello, {name}. How can I help you today?"
+            ],
+            "summary": ""
+        },
+        {
+            "tag": "preference",
+            "patterns": [
+                "\\b(i\\s+like|i\\s+prefer|my\\s+favourite\\s+category\\s+is|my\\s+favorite\\s+category\\s+is)\\s+([A-Za-z\\s]{3,})\\b"
+            ],
+            "responses": [
+                "Your preference has been noted: {preference}."
+            ],
+            "summary": ""
+        },
+        {
+            "tag": "upset_customer",
+            "patterns": [
+                "\\b(sad|angry|upset|unhappy|frustrated|annoyed|disappointed|complaint|complain)\\b"
+            ],
+            "responses": [
+                "I am sorry this has been frustrating{name_suffix}. Please tell me what happened so I can guide you properly.",
+                "I understand{name_suffix}. Was the issue related to delivery, payment, return, product, seller, or account?",
+                "I am sorry for the inconvenience{name_suffix}. Let us work through the issue step by step."
+            ],
+            "summary": "customer complaint"
+        },
+        {
+            "tag": "tracking_no_update",
+            "patterns": [
+                "\\b(no\\s+update|tracking\\s+not\\s+updated|stuck\\s+in\\s+transit|not\\s+moving|carrier\\s+delay)\\b"
+            ],
+            "responses": [
+                "If tracking has no update, check the promised delivery date first. If that date has passed, contact support with the order number and latest carrier status.",
+                "A tracking page can pause while the package moves between facilities. If the delivery date has passed, raise a missing or delayed package request from the order page."
+            ],
+            "next_step": "Next step: keep the order number and latest tracking status ready.",
+            "summary": "tracking no update"
+        },
+        {
+            "tag": "return_policy_help",
+            "patterns": [
+                "\\b(return\\s+policy|return\\s+window|eligible\\s+for\\s+return|return\\s+eligibility)\\b"
+            ],
+            "responses": [
+                "Return policy depends on the item category, seller, and delivery date. Check the return window on the order page before starting the request.",
+                "For return policy, open the order details and confirm whether the item is still inside the return window and whether it needs original packaging."
+            ],
+            "next_step": "Next step: check the return window on the order page.",
+            "summary": "return policy help"
+        },
+        {
+            "tag": "return_label_help",
+            "patterns": [
+                "\\b(return\\s+label|shipping\\s+label|drop\\s+off|pickup|pick\\s+up)\\b"
+            ],
+            "responses": [
+                "For a return label, open the return request and choose the drop-off or pickup option shown for that item.",
+                "Return label options appear after the return reason is selected. Use the label or QR code shown on the return page."
+            ],
+            "next_step": "Next step: choose the return method shown on the order page.",
+            "summary": "return label help"
+        },
+        {
+            "tag": "refund_timeline",
+            "patterns": [
+                "\\b(refund\\s+time|refund\\s+status|when\\s+refund|money\\s+back|refund\\s+delay)\\b"
+            ],
+            "responses": [
+                "Refund timing depends on the payment method and when the returned item is received. Check the refund status from the order or payment page.",
+                "If the return has been received but the refund is delayed, keep the order number and refund reference ready before contacting support."
+            ],
+            "next_step": "Next step: check the refund status on the order page.",
+            "summary": "refund timeline"
+        },
+        {
+            "tag": "delivery_date_change",
+            "patterns": [
+                "\\b(change\\s+delivery\\s+date|change\\s+delivery\\s+time|reschedule\\s+delivery|delivery\\s+slot|time\\s+slot)\\b"
+            ],
+            "responses": [
+                "If rescheduling is available, the order tracking page will show a delivery date or time-slot option. If the package is already out for delivery, contact support.",
+                "Delivery date changes depend on the carrier status. Check the tracking page first and use the reschedule option if it appears."
+            ],
+            "next_step": "Next step: check whether the tracking page shows a reschedule option.",
+            "summary": "delivery schedule help"
+        },
+        {
+            "tag": "payment_failed",
+            "patterns": [
+                "\\b(payment\\s+failed|checkout\\s+failed|checkout\\s+error|payment\\s+error|failed\\s+payment)\\b"
+            ],
+            "responses": [
+                "If payment failed, do not retry repeatedly. Check card details, billing address, available balance, and whether the bank blocked the transaction.",
+                "A failed checkout can happen because of bank checks, expired cards, billing mismatch, or temporary checkout errors."
+            ],
+            "next_step": "Next step: verify billing details before trying again.",
+            "summary": "failed payment"
+        },
+        {
+            "tag": "card_declined",
+            "patterns": [
+                "\\b(card\\s+declined|declined\\s+card|bank\\s+declined|card\\s+blocked)\\b"
+            ],
+            "responses": [
+                "If the card was declined, confirm the card is active, billing details match, and online transactions are allowed by the bank.",
+                "A declined card usually needs bank confirmation or updated billing details before checkout will work."
+            ],
+            "next_step": "Next step: check the bank message or try another saved payment method.",
+            "summary": "card declined"
+        },
+        {
+            "tag": "wrong_charge",
+            "patterns": [
+                "\\b(wrong\\s+charge|incorrect\\s+charge|charged\\s+wrong|extra\\s+charge|unknown\\s+charge)\\b"
+            ],
+            "responses": [
+                "For a wrong charge, compare the order total, delivery fee, discount, and bank transaction amount. Keep a screenshot before reporting it.",
+                "If the charge does not match the order total, open the billing details and report the transaction with the order number."
+            ],
+            "next_step": "Next step: save the transaction ID and order total before contacting support.",
+            "summary": "wrong charge"
+        },
+        {
+            "tag": "account_email_change",
+            "patterns": [
+                "\\b(change\\s+email|update\\s+email|wrong\\s+email|email\\s+change|profile\\s+email)\\b"
+            ],
+            "responses": [
+                "For email changes, open account settings and update the email address after verification. If you cannot access the old email, use account recovery.",
+                "Email changes usually require verification. Check both the old and new inbox for confirmation messages."
+            ],
+            "next_step": "Next step: verify the new email from account settings.",
+            "summary": "account email help"
+        },
+        {
+            "tag": "product_policy_check",
+            "patterns": [
+                "\\b(return\\s+policy|warranty|warranty\\s+details|support\\s+information|seller\\s+policy|return\\s+window)\\b"
+            ],
+            "responses": [
+                "For buying decisions, check the item return window, warranty details, seller rating, and support information before checkout.",
+                "A safer product choice has a clear return window, visible warranty terms, recent reviews, and a reliable seller profile."
+            ],
+            "next_step": "Next step: open the item details and confirm the return window before buying.",
+            "summary": "product policy check"
+        },
+        {
+            "tag": "seller_policy_check",
+            "patterns": [
+                "\\b(seller\\s+policy|seller\\s+return\\s+policy|seller\\s+warranty|seller\\s+rating|seller\\s+terms)\\b"
+            ],
+            "responses": [
+                "For seller policy, check seller rating, return terms, warranty coverage, and how quickly the seller responds to customers.",
+                "Before buying from a seller, review their rating, return policy, warranty information, and recent buyer feedback."
+            ],
+            "next_step": "Next step: compare seller rating and return terms before checkout.",
+            "summary": "seller policy check"
+        },
+        {
+            "tag": "seller_fake_listing",
+            "patterns": [
+                "\\b(fake\\s+listing|fake\\s+seller|scam|counterfeit|suspicious\\s+seller|listing\\s+looks\\s+fake)\\b"
+            ],
+            "responses": [
+                "If a listing looks fake, avoid checkout. Check seller history, product reviews, price realism, and whether the brand or warranty looks genuine.",
+                "For a suspicious seller, do not share extra personal details. Report the listing and choose a seller with stronger ratings and verified reviews."
+            ],
+            "next_step": "Next step: report the listing if the seller or product details look unsafe.",
+            "summary": "suspicious seller listing"
+        },
+        {
+            "tag": "proof_of_delivery_help",
+            "patterns": [
+                "\\b(proof\\s+of\\s+delivery|delivery\\s+proof|proof\\s+delivery|delivered\\s+proof)\\b"
+            ],
+            "responses": [
+                "Proof of delivery is usually shown on the tracking page after the package is marked delivered. Open the order, choose Track Package, and check for a delivery photo, signed confirmation, or delivery note.",
+                "To check proof of delivery, open the order tracking page and look below the delivered status for a photo, signature, or carrier delivery note."
+            ],
+            "summary": "proof of delivery help",
+            "next_step": "Next step: open Track Package for the selected order and review the delivered status details."
+        },
+        {
+            "tag": "carrier_status_help",
+            "patterns": [
+                "\\b(carrier\\s+status|courier\\s+status|shipping\\s+carrier|carrier\\s+update|courier\\s+update)\\b"
+            ],
+            "responses": [
+                "Carrier status shows where the package is in the delivery process. Open Track Package to see the latest scan, courier name, and current delivery stage.",
+                "For carrier status, check the tracking page first. If the carrier has not updated after the promised delivery date, contact support with the order number."
+            ],
+            "summary": "carrier status help",
+            "next_step": "Next step: compare the latest carrier scan with the promised delivery date."
+        },
+        {
+            "tag": "tracking_delivery_date_help",
+            "patterns": [
+                "\\b(delivery\\s+date|expected\\s+delivery|promised\\s+date|arrival\\s+date|when\\s+will\\s+it\\s+arrive)\\b"
+            ],
+            "responses": [
+                "The delivery date is shown on the order tracking page. If the date has changed, use the latest date shown by the carrier before contacting support.",
+                "To check the delivery date, open Track Package for the order and read the expected delivery section near the current carrier status."
+            ],
+            "summary": "tracking delivery date help",
+            "next_step": "Next step: use the latest expected date shown on the tracking page."
+        },
+        {
+            "tag": "tracking_page_help",
+            "patterns": [
+                "\\b(tracking\\s+page|track\\s+package|where\\s+to\\s+track|how\\s+to\\s+track)\\b"
+            ],
+            "responses": [
+                "To open the tracking page, go to your orders page, select the order, and choose Track Package. That page shows carrier status, delivery date, and delivery proof when available.",
+                "Track Package is the main page for order movement, carrier updates, expected delivery date, and delivery proof after delivery."
+            ],
+            "summary": "tracking page help",
+            "next_step": "Next step: open the selected order and choose Track Package."
+        },
+        {
+            "tag": "product_seller_rating_help",
+            "patterns": [
+                "\\b(seller\\s+rating|seller\\s+ratings|store\\s+rating|official\\s+store)\\b"
+            ],
+            "responses": [
+                "For seller rating, choose sellers with strong recent ratings, verified reviews, clear return terms, and visible warranty support.",
+                "Seller rating helps compare reliability. Prefer sellers with consistent ratings, recent feedback, and clear support information."
+            ],
+            "summary": "seller rating check",
+            "next_step": "Next step: compare recent seller feedback before checkout."
+        },
+        {
+            "tag": "default",
+            "patterns": [
+                ".*"
+            ],
+            "responses": [
+                "I did not understand that. Please try a topic such as orders, returns, delivery, payments, account, products, offers, membership, or sellers.",
+                "Aivora can help with orders, returns, delivery, payments, products, offers, membership, sellers, and accounts.",
+                "Please add detail, such as return an item, track my order, payment failed, or change delivery address."
+            ],
+            "summary": ""
+        }
+    ],
+    "messages": {
+        "welcome": [
+            "Hello, I am Aivora, your ecommerce support assistant.",
+            "How can I help you today? Type help for support options.",
+            "Type exit or quit to end the chat."
+        ],
+        "empty_input": "Please type a question or support topic.",
+        "goodbye": "Thank you for chatting. Goodbye!",
+        "summary_empty": "Chat summary: no issue details were saved.",
+        "summary_prefix": "Chat summary: ",
+        "negative_prefix": "I am sorry for the inconvenience. ",
+        "priority_prefix": "I understand this is urgent. ",
+        "name_label": "Name",
+        "order_label": "Order",
+        "single_issue_label": "Issue handled",
+        "multiple_issues_label": "Issues handled",
+        "preference_label": "Preference",
+        "priority_single_label": "Priority issue",
+        "priority_multiple_label": "Priority issues"
+    },
+    "summary_replacements": {
+        "delivery help": [
+            "late delivery",
+            "missing package",
+            "damaged delivery",
+            "delivery address help",
+            "delivery schedule help"
+        ],
+        "payment or billing": [
+            "duplicate payment",
+            "failed payment",
+            "card declined",
+            "wrong charge"
+        ],
+        "account help": [
+            "account password help",
+            "account email help"
+        ],
+        "seller issue": [
+            "seller not responding",
+            "seller policy check",
+            "suspicious seller listing"
+        ],
+        "product search": [
+            "price recommendation",
+            "review recommendation",
+            "delivery-speed recommendation",
+            "brand recommendation",
+            "product policy check",
+            "seller rating check"
+        ],
+        "return or refund": [
+            "return policy help",
+            "return label help",
+            "refund timeline"
+        ],
+        "order tracking": [
+            "proof of delivery help",
+            "carrier status help",
+            "tracking delivery date help",
+            "tracking page help",
+            "tracking no update"
+        ]
+    },
+    "confidence_keywords": {
+        "greeting": [
+            "hi",
+            "hello",
+            "hey",
+            "morning",
+            "afternoon",
+            "evening"
+        ],
+        "support_menu": [
+            "help",
+            "menu",
+            "options",
+            "topics"
+        ],
+        "order_status": [
+            "track",
+            "tracking",
+            "order",
+            "status",
+            "package",
+            "parcel",
+            "where"
+        ],
+        "returns": [
+            "return",
+            "refund",
+            "replace",
+            "exchange",
+            "label",
+            "wrong",
+            "damaged"
+        ],
+        "delivery": [
+            "delivery",
+            "shipping",
+            "shipment",
+            "address",
+            "date",
+            "courier"
+        ],
+        "delivery_late": [
+            "late",
+            "delay",
+            "delayed"
+        ],
+        "delivery_missing": [
+            "missing",
+            "lost",
+            "arrived"
+        ],
+        "delivery_damaged": [
+            "damaged",
+            "broken",
+            "defective",
+            "cracked"
+        ],
+        "delivery_wrong_address": [
+            "wrong",
+            "address",
+            "change",
+            "delivery"
+        ],
+        "payment_duplicate": [
+            "payment",
+            "paid",
+            "charged",
+            "twice",
+            "double",
+            "duplicate"
+        ],
+        "payment": [
+            "payment",
+            "paid",
+            "card",
+            "checkout",
+            "charge",
+            "billing",
+            "transaction"
+        ],
+        "account_password": [
+            "password",
+            "reset",
+            "locked",
+            "login"
+        ],
+        "account": [
+            "account",
+            "login",
+            "email",
+            "profile",
+            "signin"
+        ],
+        "product_search": [
+            "find",
+            "search",
+            "item",
+            "product",
+            "recommend",
+            "gift"
+        ],
+        "recommend_price": [
+            "price",
+            "cheap",
+            "budget",
+            "affordable",
+            "cost"
+        ],
+        "recommend_rating": [
+            "rating",
+            "review",
+            "reviews",
+            "rated"
+        ],
+        "recommend_delivery": [
+            "fast",
+            "quick",
+            "same",
+            "next",
+            "delivery"
+        ],
+        "recommend_brand": [
+            "brand",
+            "branded",
+            "trusted",
+            "seller"
+        ],
+        "offers": [
+            "deal",
+            "discount",
+            "coupon",
+            "offer",
+            "sale",
+            "promo"
+        ],
+        "membership": [
+            "membership",
+            "subscription",
+            "trial",
+            "premium"
+        ],
+        "seller_not_responding": [
+            "seller",
+            "responding",
+            "reply",
+            "response",
+            "ignored"
+        ],
+        "seller_issue": [
+            "seller",
+            "vendor",
+            "marketplace",
+            "dispute",
+            "fake"
+        ],
+        "support_agent": [
+            "agent",
+            "representative",
+            "human",
+            "support",
+            "escalate"
+        ],
+        "upset_customer": [
+            "angry",
+            "upset",
+            "unhappy",
+            "frustrated",
+            "complaint"
+        ],
+        "tracking_no_update": [
+            "no",
+            "update",
+            "tracking",
+            "stuck",
+            "transit",
+            "moving",
+            "carrier",
+            "delay"
+        ],
+        "return_policy_help": [
+            "return",
+            "policy",
+            "window",
+            "eligible",
+            "eligibility"
+        ],
+        "return_label_help": [
+            "return",
+            "label",
+            "drop",
+            "pickup",
+            "shipping"
+        ],
+        "refund_timeline": [
+            "refund",
+            "time",
+            "status",
+            "money",
+            "back",
+            "delay"
+        ],
+        "delivery_date_change": [
+            "change",
+            "delivery",
+            "date",
+            "time",
+            "reschedule",
+            "slot"
+        ],
+        "payment_failed": [
+            "payment",
+            "failed",
+            "checkout",
+            "error"
+        ],
+        "card_declined": [
+            "card",
+            "declined",
+            "bank",
+            "blocked"
+        ],
+        "wrong_charge": [
+            "wrong",
+            "incorrect",
+            "extra",
+            "unknown",
+            "charge",
+            "charged"
+        ],
+        "account_email_change": [
+            "change",
+            "update",
+            "wrong",
+            "email",
+            "profile"
+        ],
+        "product_policy_check": [
+            "return",
+            "policy",
+            "warranty",
+            "support",
+            "window",
+            "seller"
+        ],
+        "seller_policy_check": [
+            "seller",
+            "policy",
+            "return",
+            "warranty",
+            "rating",
+            "terms"
+        ],
+        "seller_fake_listing": [
+            "fake",
+            "listing",
+            "seller",
+            "scam",
+            "counterfeit",
+            "suspicious"
+        ],
+        "proof_of_delivery_help": [
+            "proof",
+            "delivery",
+            "delivered",
+            "photo",
+            "signature"
+        ],
+        "carrier_status_help": [
+            "carrier",
+            "courier",
+            "status",
+            "scan",
+            "update"
+        ],
+        "tracking_delivery_date_help": [
+            "delivery",
+            "date",
+            "expected",
+            "promised",
+            "arrival",
+            "arrive"
+        ],
+        "tracking_page_help": [
+            "tracking",
+            "track",
+            "package",
+            "page"
+        ],
+        "product_seller_rating_help": [
+            "seller",
+            "rating",
+            "ratings",
+            "store",
+            "official"
+        ]
+    },
+    "confidence_threshold": 2,
+    "slot_rules": {
+        "order_status": {
+            "slot": "order_number",
+            "prompt": "Please type the order number so I can help with tracking."
+        },
+        "returns": {
+            "slot": "order_number",
+            "prompt": "Type the order number if you want return help for a specific order."
+        },
+        "delivery": {
+            "slot": "delivery_detail",
+            "prompt": "Tell me if the delivery is late, missing, damaged, wrong address, or share the order number."
+        },
+        "payment": {
+            "slot": "payment_detail",
+            "prompt": "Tell me if the payment failed, was declined, charged twice, or belongs to a specific order."
+        },
+        "account": {
+            "slot": "account_detail",
+            "prompt": "Tell me if the account issue is login, password, email, profile, or locked account."
+        },
+        "seller_issue": {
+            "slot": "seller_detail",
+            "prompt": "Tell me if the seller is not responding, the listing looks fake, or there is an order dispute."
+        },
+        "product_search": {
+            "slot": "shopping_priority",
+            "prompt": "Tell me whether price, rating, delivery speed, or brand matters most."
+        }
+    },
+    "memory_patterns": {
+        "name": {
+            "pattern": "\\b(my\\s+name\\s+is|i'm|call\\s+me)\\s+([A-Za-z]{2,})\\b",
+            "groups": [
+                2
+            ]
+        },
+        "preference": {
+            "pattern": "\\b(i\\s+like|i\\s+prefer|my\\s+favourite\\s+category\\s+is|my\\s+favorite\\s+category\\s+is)\\s+([A-Za-z\\s]{3,})\\b",
+            "groups": [
+                2
+            ]
+        },
+        "order_number": {
+            "pattern": "\\border\\s*(number|id)?\\s*#?\\s*(\\d{4,})\\b|\\bmy\\s+order\\s+is\\s*(\\d{4,})\\b",
+            "groups": [
+                2,
+                3
+            ]
+        },
+        "bare_order_number": {
+            "pattern": "^#?(\\d{4,})$",
+            "groups": [
+                1
+            ]
+        },
+        "corrected_order_number": {
+            "pattern": "\\b\\d{4,}\\b",
+            "trigger_word": "order",
+            "groups": [
+                0
+            ]
+        }
+    },
+    "language": {
+        "stop_words": [
+            "a",
+            "an",
+            "and",
+            "are",
+            "as",
+            "at",
+            "be",
+            "for",
+            "from",
+            "has",
+            "have",
+            "how",
+            "i",
+            "in",
+            "is",
+            "it",
+            "me",
+            "my",
+            "of",
+            "on",
+            "or",
+            "please",
+            "the",
+            "this",
+            "to",
+            "was",
+            "what",
+            "with",
+            "you",
+            "your",
+            "like",
+            "prefer",
+            "favorite",
+            "favourite",
+            "category"
+        ],
+        "synonym_groups": {
+            "package": [
+                "parcel",
+                "parcels",
+                "shipment",
+                "shipments",
+                "box"
+            ],
+            "return": [
+                "returns",
+                "sendback",
+                "exchange",
+                "exchanges",
+                "replacement"
+            ],
+            "refund": [
+                "refunds",
+                "moneyback",
+                "cashback"
+            ],
+            "delivery": [
+                "shipping",
+                "deliveries",
+                "courier",
+                "arrival",
+                "arrive"
+            ],
+            "payment": [
+                "payments",
+                "billing",
+                "bill",
+                "checkout",
+                "charged",
+                "charge"
+            ],
+            "account": [
+                "login",
+                "signin",
+                "profile",
+                "password",
+                "email"
+            ],
+            "product": [
+                "products",
+                "item",
+                "items",
+                "goods"
+            ],
+            "sad": [
+                "unhappy",
+                "upset",
+                "annoyed",
+                "angry",
+                "frustrated",
+                "disappointed"
+            ],
+            "order": [
+                "orders",
+                "purchase",
+                "purchases"
+            ]
+        },
+        "typo_corrections": {
+            "acount": "account",
+            "adress": "address",
+            "bil": "bill",
+            "delivary": "delivery",
+            "deliveri": "delivery",
+            "delivry": "delivery",
+            "ordr": "order",
+            "paymnt": "payment",
+            "pyment": "payment",
+            "retrun": "return",
+            "retun": "return",
+            "refnd": "refund",
+            "seler": "seller",
+            "shiping": "shipping"
+        },
+        "correction_vocabulary": [
+            "account",
+            "address",
+            "billing",
+            "brand",
+            "cancel",
+            "card",
+            "checkout",
+            "coupon",
+            "damaged",
+            "delivery",
+            "discount",
+            "duplicate",
+            "email",
+            "exchange",
+            "failed",
+            "item",
+            "late",
+            "login",
+            "missing",
+            "order",
+            "package",
+            "password",
+            "payment",
+            "price",
+            "product",
+            "rating",
+            "refund",
+            "return",
+            "seller",
+            "shipping",
+            "track",
+            "tracking",
+            "twice",
+            "like",
+            "prefer",
+            "favorite",
+            "favourite",
+            "category",
+            "label",
+            "pickup",
+            "drop",
+            "dropoff",
+            "policy",
+            "window",
+            "warranty",
+            "reschedule",
+            "slot",
+            "proof",
+            "photo",
+            "signature",
+            "carrier",
+            "courier",
+            "scan",
+            "expected",
+            "promised",
+            "arrival"
+        ],
+        "sentiment_words": {
+            "negative": [
+                "angry",
+                "annoyed",
+                "bad",
+                "broken",
+                "complaint",
+                "damaged",
+                "delay",
+                "delayed",
+                "disappointed",
+                "frustrated",
+                "late",
+                "lost",
+                "missing",
+                "sad",
+                "terrible",
+                "unhappy",
+                "upset",
+                "wrong"
+            ],
+            "positive": [
+                "good",
+                "great",
+                "helpful",
+                "thanks",
+                "thank",
+                "perfect",
+                "nice"
+            ]
+        },
+        "priority_words": [
+            "urgent",
+            "emergency",
+            "asap",
+            "immediately",
+            "stolen",
+            "twice"
+        ],
+        "priority_phrases": [
+            "charged twice",
+            "double charged",
+            "duplicate charge",
+            "paid twice",
+            "payment done twice",
+            "payment made twice",
+            "lost package",
+            "missing package"
+        ],
+        "order_followups": {
+            "followup_track_order": [
+                "track",
+                "status",
+                "where",
+                "find"
+            ],
+            "followup_return_order": [
+                "return",
+                "refund",
+                "replace",
+                "exchange"
+            ],
+            "followup_cancel_order": [
+                "cancel",
+                "stop"
+            ]
+        },
+        "clarify_topic_keywords": {
+            "order_status": [
+                "order",
+                "orders",
+                "package",
+                "track",
+                "tracking"
+            ],
+            "returns": [
+                "return",
+                "refund",
+                "replace",
+                "exchange"
+            ],
+            "delivery": [
+                "delivery",
+                "shipping",
+                "shipment",
+                "address",
+                "late",
+                "missing"
+            ],
+            "payment": [
+                "payment",
+                "billing",
+                "card",
+                "charged",
+                "checkout"
+            ],
+            "account": [
+                "account",
+                "login",
+                "password",
+                "email",
+                "profile"
+            ],
+            "product_search": [
+                "product",
+                "item",
+                "find",
+                "search"
+            ],
+            "seller_issue": [
+                "seller",
+                "vendor",
+                "marketplace"
+            ],
+            "membership": [
+                "membership",
+                "subscription",
+                "premium"
+            ]
+        },
+        "direct_menu_words": [
+            "help",
+            "menu",
+            "options",
+            "topics"
+        ],
+        "problem_words": [
+            "problem",
+            "issue",
+            "trouble",
+            "wrong",
+            "help"
+        ],
+        "order_reference_words": [
+            "it",
+            "this",
+            "that",
+            "order",
+            "package"
+        ]
+    },
+    "topic_map": {
+        "clarify_issue": "clarify_issue",
+        "delivery": "delivery",
+        "delivery_late": "delivery",
+        "delivery_missing": "delivery",
+        "delivery_damaged": "delivery",
+        "delivery_wrong_address": "delivery",
+        "order_number_delivery": "delivery",
+        "product_search": "product_search",
+        "recommend_price": "product_search",
+        "recommend_rating": "product_search",
+        "recommend_delivery": "product_search",
+        "recommend_brand": "product_search",
+        "returns": "returns",
+        "order_number_return": "returns",
+        "order_status": "order_status",
+        "order_number_tracking": "order_status",
+        "payment": "payment",
+        "payment_duplicate": "payment",
+        "order_number_payment": "payment",
+        "account": "account",
+        "account_password": "account",
+        "seller_issue": "seller_issue",
+        "seller_not_responding": "seller_issue",
+        "membership": "membership",
+        "tracking_no_update": "order_status",
+        "return_policy_help": "returns",
+        "return_label_help": "returns",
+        "refund_timeline": "returns",
+        "delivery_date_change": "delivery",
+        "payment_failed": "payment",
+        "card_declined": "payment",
+        "wrong_charge": "payment",
+        "account_email_change": "account",
+        "product_policy_check": "product_search",
+        "seller_policy_check": "seller_issue",
+        "seller_fake_listing": "seller_issue",
+        "proof_of_delivery_help": "order_status",
+        "carrier_status_help": "order_status",
+        "tracking_delivery_date_help": "order_status",
+        "tracking_page_help": "order_status",
+        "product_seller_rating_help": "product_search"
+    },
+    "completed_slot_intents": [
+        "order_number_tracking",
+        "order_number_return",
+        "order_number_delivery",
+        "order_number_payment",
+        "payment_duplicate",
+        "delivery_late",
+        "delivery_missing",
+        "delivery_damaged",
+        "delivery_wrong_address",
+        "account_password",
+        "seller_not_responding",
+        "recommend_price",
+        "recommend_rating",
+        "recommend_delivery",
+        "recommend_brand",
+        "tracking_no_update",
+        "return_policy_help",
+        "return_label_help",
+        "refund_timeline",
+        "delivery_date_change",
+        "payment_failed",
+        "card_declined",
+        "wrong_charge",
+        "account_email_change",
+        "product_policy_check",
+        "seller_policy_check",
+        "seller_fake_listing",
+        "proof_of_delivery_help",
+        "carrier_status_help",
+        "tracking_delivery_date_help",
+        "tracking_page_help",
+        "product_seller_rating_help"
+    ],
+    "single_response_intents": [
+        "name",
+        "order_number",
+        "preference"
+    ],
+    "slot_followups": {
+        "payment_detail": [
+            {
+                "intent": "payment_duplicate",
+                "keywords": [
+                    "twice",
+                    "double",
+                    "duplicate",
+                    "again"
+                ],
+                "phrases": [
+                    "done twice",
+                    "paid twice",
+                    "charged twice"
+                ]
+            },
+            {
+                "intent": "payment_failed",
+                "keywords": [
+                    "failed",
+                    "checkout",
+                    "error"
+                ],
+                "phrases": [
+                    "payment failed",
+                    "checkout failed",
+                    "checkout error"
+                ]
+            },
+            {
+                "intent": "card_declined",
+                "keywords": [
+                    "declined",
+                    "bank",
+                    "blocked"
+                ],
+                "phrases": [
+                    "card declined",
+                    "bank declined"
+                ]
+            },
+            {
+                "intent": "wrong_charge",
+                "keywords": [
+                    "wrong",
+                    "incorrect",
+                    "extra",
+                    "unknown",
+                    "charge",
+                    "charged"
+                ],
+                "phrases": [
+                    "wrong charge",
+                    "extra charge",
+                    "unknown charge"
+                ]
+            }
+        ],
+        "delivery_detail": [
+            {
+                "intent": "delivery_wrong_address",
+                "keywords": [
+                    "address"
+                ],
+                "phrases": [
+                    "wrong address",
+                    "change address",
+                    "delivery address"
+                ]
+            },
+            {
+                "intent": "delivery_date_change",
+                "keywords": [
+                    "date",
+                    "time",
+                    "slot",
+                    "reschedule"
+                ],
+                "phrases": [
+                    "change delivery date",
+                    "change delivery time",
+                    "reschedule delivery"
+                ]
+            },
+            {
+                "intent": "delivery_late",
+                "keywords": [
+                    "late",
+                    "delay",
+                    "delayed"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "delivery_missing",
+                "keywords": [
+                    "missing",
+                    "lost"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "delivery_damaged",
+                "keywords": [
+                    "damaged",
+                    "broken",
+                    "defective",
+                    "cracked"
+                ],
+                "phrases": []
+            }
+        ],
+        "account_detail": [
+            {
+                "intent": "account_password",
+                "keywords": [
+                    "password",
+                    "locked"
+                ],
+                "phrases": [
+                    "cannot log in",
+                    "forgot password",
+                    "locked out"
+                ]
+            },
+            {
+                "intent": "account_email_change",
+                "keywords": [
+                    "email",
+                    "profile",
+                    "change",
+                    "update",
+                    "wrong"
+                ],
+                "phrases": [
+                    "change email",
+                    "update email",
+                    "wrong email"
+                ]
+            },
+            {
+                "intent": "account",
+                "keywords": [
+                    "login",
+                    "signin",
+                    "profile",
+                    "account"
+                ],
+                "phrases": []
+            }
+        ],
+        "seller_detail": [
+            {
+                "intent": "seller_not_responding",
+                "keywords": [
+                    "responding",
+                    "response",
+                    "reply",
+                    "ignored",
+                    "silent"
+                ],
+                "phrases": [
+                    "not responding",
+                    "no reply",
+                    "no response"
+                ]
+            },
+            {
+                "intent": "seller_fake_listing",
+                "keywords": [
+                    "fake",
+                    "listing",
+                    "scam",
+                    "counterfeit",
+                    "suspicious"
+                ],
+                "phrases": [
+                    "fake listing",
+                    "fake seller",
+                    "looks fake"
+                ]
+            },
+            {
+                "intent": "seller_policy_check",
+                "keywords": [
+                    "policy",
+                    "return",
+                    "warranty",
+                    "rating",
+                    "terms"
+                ],
+                "phrases": [
+                    "seller policy",
+                    "seller return policy",
+                    "seller warranty"
+                ]
+            },
+            {
+                "intent": "seller_issue",
+                "keywords": [
+                    "seller",
+                    "contact",
+                    "vendor",
+                    "dispute",
+                    "refund"
+                ],
+                "phrases": []
+            }
+        ],
+        "shopping_priority": [
+            {
+                "intent": "recommend_price",
+                "keywords": [
+                    "price",
+                    "cheap",
+                    "budget",
+                    "affordable",
+                    "cost"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "recommend_rating",
+                "keywords": [
+                    "rating",
+                    "ratings",
+                    "review",
+                    "reviews"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "recommend_delivery",
+                "keywords": [
+                    "fast",
+                    "delivery",
+                    "quick",
+                    "same",
+                    "next"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "recommend_brand",
+                "keywords": [
+                    "brand",
+                    "branded",
+                    "trusted",
+                    "official"
+                ],
+                "phrases": [
+                    "any brand",
+                    "trusted brand"
+                ]
+            },
+            {
+                "intent": "product_policy_check",
+                "keywords": [
+                    "policy",
+                    "return",
+                    "warranty",
+                    "support",
+                    "window"
+                ],
+                "phrases": [
+                    "return policy",
+                    "warranty details",
+                    "support information"
+                ]
+            }
+        ],
+        "order_number": [
+            {
+                "intent": "proof_of_delivery_help",
+                "keywords": [
+                    "proof",
+                    "delivered",
+                    "photo",
+                    "signature"
+                ],
+                "phrases": [
+                    "proof of delivery",
+                    "delivery proof",
+                    "proof delivery"
+                ]
+            },
+            {
+                "intent": "carrier_status_help",
+                "keywords": [
+                    "carrier",
+                    "courier",
+                    "scan",
+                    "status",
+                    "update"
+                ],
+                "phrases": [
+                    "carrier status",
+                    "courier status",
+                    "carrier update"
+                ]
+            },
+            {
+                "intent": "tracking_delivery_date_help",
+                "keywords": [
+                    "date",
+                    "expected",
+                    "promised",
+                    "arrival",
+                    "arrive"
+                ],
+                "phrases": [
+                    "delivery date",
+                    "expected delivery",
+                    "promised date",
+                    "arrival date",
+                    "when will it arrive"
+                ]
+            },
+            {
+                "intent": "tracking_page_help",
+                "keywords": [
+                    "tracking",
+                    "track",
+                    "package"
+                ],
+                "phrases": [
+                    "tracking page",
+                    "track package",
+                    "how to track",
+                    "where to track"
+                ]
+            },
+            {
+                "intent": "tracking_no_update",
+                "keywords": [
+                    "no",
+                    "update",
+                    "stuck",
+                    "moving",
+                    "carrier",
+                    "delay"
+                ],
+                "phrases": [
+                    "no update",
+                    "not updated",
+                    "not moving",
+                    "stuck in transit"
+                ]
+            },
+            {
+                "intent": "delivery_late",
+                "keywords": [
+                    "late",
+                    "delay",
+                    "delayed"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "delivery_missing",
+                "keywords": [
+                    "missing",
+                    "lost"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "delivery_damaged",
+                "keywords": [
+                    "damaged",
+                    "broken"
+                ],
+                "phrases": []
+            }
+        ]
+    },
+    "context_followups": {
+        "order_status": [
+            {
+                "intent": "proof_of_delivery_help",
+                "keywords": [
+                    "proof",
+                    "delivered",
+                    "photo",
+                    "signature"
+                ],
+                "phrases": [
+                    "proof of delivery",
+                    "delivery proof",
+                    "proof delivery"
+                ]
+            },
+            {
+                "intent": "carrier_status_help",
+                "keywords": [
+                    "carrier",
+                    "courier",
+                    "scan",
+                    "status",
+                    "update"
+                ],
+                "phrases": [
+                    "carrier status",
+                    "courier status",
+                    "carrier update"
+                ]
+            },
+            {
+                "intent": "tracking_delivery_date_help",
+                "keywords": [
+                    "date",
+                    "expected",
+                    "promised",
+                    "arrival",
+                    "arrive"
+                ],
+                "phrases": [
+                    "delivery date",
+                    "expected delivery",
+                    "promised date",
+                    "arrival date",
+                    "when will it arrive"
+                ]
+            },
+            {
+                "intent": "tracking_page_help",
+                "keywords": [
+                    "tracking",
+                    "track",
+                    "package"
+                ],
+                "phrases": [
+                    "tracking page",
+                    "track package",
+                    "how to track",
+                    "where to track"
+                ]
+            },
+            {
+                "intent": "tracking_no_update",
+                "keywords": [
+                    "no",
+                    "update",
+                    "stuck",
+                    "moving",
+                    "carrier",
+                    "delay"
+                ],
+                "phrases": [
+                    "no update",
+                    "not updated",
+                    "not moving",
+                    "stuck in transit"
+                ]
+            },
+            {
+                "intent": "delivery_late",
+                "keywords": [
+                    "late",
+                    "delay",
+                    "delayed"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "delivery_missing",
+                "keywords": [
+                    "missing",
+                    "lost"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "delivery_damaged",
+                "keywords": [
+                    "damaged",
+                    "broken"
+                ],
+                "phrases": []
+            }
+        ],
+        "returns": [
+            {
+                "intent": "return_policy_help",
+                "keywords": [
+                    "policy",
+                    "window",
+                    "eligible",
+                    "eligibility"
+                ],
+                "phrases": [
+                    "return policy",
+                    "return window"
+                ]
+            },
+            {
+                "intent": "return_label_help",
+                "keywords": [
+                    "label",
+                    "drop",
+                    "pickup",
+                    "shipping"
+                ],
+                "phrases": [
+                    "return label",
+                    "shipping label",
+                    "drop off"
+                ]
+            },
+            {
+                "intent": "refund_timeline",
+                "keywords": [
+                    "refund",
+                    "time",
+                    "status",
+                    "money",
+                    "delay"
+                ],
+                "phrases": [
+                    "refund time",
+                    "refund status",
+                    "money back"
+                ]
+            },
+            {
+                "intent": "returns",
+                "keywords": [
+                    "return",
+                    "replace",
+                    "exchange",
+                    "damaged",
+                    "wrong"
+                ],
+                "phrases": []
+            }
+        ],
+        "delivery": [
+            {
+                "intent": "delivery_wrong_address",
+                "keywords": [
+                    "address"
+                ],
+                "phrases": [
+                    "wrong address",
+                    "change address",
+                    "delivery address"
+                ]
+            },
+            {
+                "intent": "delivery_date_change",
+                "keywords": [
+                    "date",
+                    "time",
+                    "slot",
+                    "reschedule"
+                ],
+                "phrases": [
+                    "change delivery date",
+                    "change delivery time",
+                    "reschedule delivery"
+                ]
+            },
+            {
+                "intent": "delivery_damaged",
+                "keywords": [
+                    "damaged",
+                    "broken",
+                    "defective",
+                    "cracked"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "delivery_missing",
+                "keywords": [
+                    "missing",
+                    "lost"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "delivery_late",
+                "keywords": [
+                    "late",
+                    "delay",
+                    "delayed"
+                ],
+                "phrases": []
+            }
+        ],
+        "payment": [
+            {
+                "intent": "payment_duplicate",
+                "keywords": [
+                    "twice",
+                    "double",
+                    "duplicate",
+                    "again"
+                ],
+                "phrases": [
+                    "done twice",
+                    "paid twice",
+                    "charged twice"
+                ]
+            },
+            {
+                "intent": "payment_failed",
+                "keywords": [
+                    "failed",
+                    "checkout",
+                    "error"
+                ],
+                "phrases": [
+                    "payment failed",
+                    "checkout failed",
+                    "checkout error"
+                ]
+            },
+            {
+                "intent": "card_declined",
+                "keywords": [
+                    "declined",
+                    "bank",
+                    "blocked"
+                ],
+                "phrases": [
+                    "card declined",
+                    "bank declined"
+                ]
+            },
+            {
+                "intent": "wrong_charge",
+                "keywords": [
+                    "wrong",
+                    "incorrect",
+                    "extra",
+                    "unknown",
+                    "charge",
+                    "charged"
+                ],
+                "phrases": [
+                    "wrong charge",
+                    "extra charge",
+                    "unknown charge"
+                ]
+            }
+        ],
+        "account": [
+            {
+                "intent": "account_password",
+                "keywords": [
+                    "password",
+                    "locked"
+                ],
+                "phrases": [
+                    "cannot log in",
+                    "forgot password",
+                    "locked out"
+                ]
+            },
+            {
+                "intent": "account_email_change",
+                "keywords": [
+                    "email",
+                    "profile",
+                    "change",
+                    "update",
+                    "wrong"
+                ],
+                "phrases": [
+                    "change email",
+                    "update email",
+                    "wrong email"
+                ]
+            },
+            {
+                "intent": "account",
+                "keywords": [
+                    "login",
+                    "signin",
+                    "profile",
+                    "account"
+                ],
+                "phrases": []
+            }
+        ],
+        "seller_issue": [
+            {
+                "intent": "seller_not_responding",
+                "keywords": [
+                    "responding",
+                    "response",
+                    "reply",
+                    "ignored",
+                    "silent"
+                ],
+                "phrases": [
+                    "not responding",
+                    "no reply",
+                    "no response"
+                ]
+            },
+            {
+                "intent": "seller_fake_listing",
+                "keywords": [
+                    "fake",
+                    "listing",
+                    "scam",
+                    "counterfeit",
+                    "suspicious"
+                ],
+                "phrases": [
+                    "fake listing",
+                    "fake seller",
+                    "looks fake"
+                ]
+            },
+            {
+                "intent": "seller_policy_check",
+                "keywords": [
+                    "policy",
+                    "return",
+                    "warranty",
+                    "rating",
+                    "terms"
+                ],
+                "phrases": [
+                    "seller policy",
+                    "seller return policy",
+                    "seller warranty"
+                ]
+            },
+            {
+                "intent": "seller_issue",
+                "keywords": [
+                    "seller",
+                    "contact",
+                    "vendor",
+                    "dispute",
+                    "refund"
+                ],
+                "phrases": []
+            }
+        ],
+        "product_search": [
+            {
+                "intent": "product_seller_rating_help",
+                "keywords": [
+                    "seller",
+                    "rating",
+                    "ratings",
+                    "store",
+                    "official"
+                ],
+                "phrases": [
+                    "seller rating",
+                    "seller ratings",
+                    "store rating",
+                    "official store"
+                ]
+            },
+            {
+                "intent": "product_policy_check",
+                "keywords": [
+                    "policy",
+                    "return",
+                    "warranty",
+                    "support",
+                    "window"
+                ],
+                "phrases": [
+                    "return policy",
+                    "warranty details",
+                    "support information"
+                ]
+            },
+            {
+                "intent": "recommend_price",
+                "keywords": [
+                    "price",
+                    "cheap",
+                    "budget",
+                    "affordable",
+                    "cost"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "recommend_rating",
+                "keywords": [
+                    "rating",
+                    "ratings",
+                    "review",
+                    "reviews"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "recommend_delivery",
+                "keywords": [
+                    "fast",
+                    "delivery",
+                    "quick",
+                    "same",
+                    "next"
+                ],
+                "phrases": []
+            },
+            {
+                "intent": "recommend_brand",
+                "keywords": [
+                    "brand",
+                    "branded",
+                    "trusted",
+                    "official"
+                ],
+                "phrases": [
+                    "any brand",
+                    "trusted brand"
+                ]
+            }
+        ]
+    }
+}
